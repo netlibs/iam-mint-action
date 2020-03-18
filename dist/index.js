@@ -495,11 +495,26 @@ module.exports = require("os");
 /***/ 104:
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
+const homedir = __webpack_require__(87).homedir();
+const fs = __webpack_require__(747);
 const core = __webpack_require__(470);
 const github = __webpack_require__(469);
 const fetch = __webpack_require__(454);
 
+const awsDir = `${homedir}/.aws`;
+
+
 async function main() {
+
+  console.log("writting to", awsDir)
+
+  if (!fs.existsSync(awsDir)){
+    fs.mkdirSync(awsDir);
+  }
+
+  await fs.promises.writeFile(`${awsDir}/config`, "[default]\nregion=us-west-2\n");
+
+
 
   const token = core.getInput('token');
   const actor = core.getInput('endpoint');
@@ -518,7 +533,10 @@ async function main() {
 
   const body = await res.json();
 
-  console.log(body);
+  const credentials = body.credentials;
+  credentials.Version = 1;
+
+  await fs.promises.writeFile(`${awsDir}/credentials`, `[default]\ncredential_process = /bin/echo '${JSON.stringify(credentials)}'\n`);
 
 }
 

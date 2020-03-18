@@ -8,6 +8,14 @@ inputs:
   token:
     description: 'The GitHub token'
     required: true
+  profile:
+    description: 'The AWS profile token'
+    required: true
+    default: 'default'
+  region:
+    description: 'The AWS region'
+    required: true
+    default: us-west-2
   actor:
     description: 'The actor'
     required: true

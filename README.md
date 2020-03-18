@@ -15,7 +15,7 @@ jobs:
       with:          
         endpoint: https://my.endpoint/token
         token: ${{ secrets.GITHUB_TOKEN }}
-    # you can 
+    # you can now use AWS-SDK based apps with ambient credentials
     - run: aws sts get-caller-identity
 ```
 
@@ -34,7 +34,6 @@ jobs:
 ```
 npm run build
 git commit -a -m 'new version'
-git push
 git tag -a -m "intial release" v1
 git push --follow-tags
 ```

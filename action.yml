@@ -1,0 +1,18 @@
+name: 'IAM Minter'
+description: 'Mint AWS STS credentials based on github token verification'
+author: 'GitHub'
+inputs: 
+  endpoint:
+    description: 'The minter endpoint'
+    required: true
+  token:
+    description: 'The GitHub token'
+    default: ${{ secrets.GITHUB_TOKEN }}
+    required: true
+  project:
+    description: 'The GitHub full project (org/project) to mint credential for'
+    default: ${{ github.repository }}
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'

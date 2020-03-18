@@ -8,6 +8,10 @@ inputs:
   token:
     description: 'The GitHub token'
     required: true
+  actor:
+    description: 'The actor'
+    required: true
+    default: 'github-actions'
   project:
     description: 'The GitHub full project (org/project) to mint credential for'
     default: ${{ github.repository }}

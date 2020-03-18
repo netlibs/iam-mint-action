@@ -1,23 +1,30 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const fetch = require('node-fetch');
 
-try {
+async function main() {
 
-  // `who-to-greet` input defined in action metadata file
   const token = core.getInput('token');
+  const actor = core.getInput('endpoint');
   const endpoint = core.getInput('endpoint');
   const project = core.getInput('project');
 
-  console.log(`${token} / ${endpoint} / ${project}`);
 
-  core.setOutput("time", time);
+  const res = await fetch(endpoint, { 
+    method: 'post', 
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ token, project, actor })
+  });
 
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
+  if (res.status != 200) 
+    throw new Error(`failed to mint token`);
 
-} catch (error) {
+  const body = await res.json();
 
-  core.setFailed(error.message);
+  console.log(body);
 
 }
+
+main().then(console.log).catch(e => core.setFailed(e.message));
+
+

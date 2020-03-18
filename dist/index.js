@@ -503,17 +503,14 @@ const fetch = __webpack_require__(454);
 
 const awsDir = `${homedir}/.aws`;
 
-
 async function main() {
 
   const token = core.getInput('token');
-  const actor = core.getInput('endpoint');
+  const actor = core.getInput('actor');
   const endpoint = core.getInput('endpoint');
   const project = core.getInput('project');
   const region = core.getInput('region');
   const profile = core.getInput('profile');
-
-  console.log("writting to", awsDir)
 
   if (!fs.existsSync(awsDir)){
     fs.mkdirSync(awsDir);

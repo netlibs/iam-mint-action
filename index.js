@@ -34,8 +34,15 @@ async function main() {
 
   const credentials = body.credentials;
   credentials.Version = 1;
+  
+  let echo;
+  if (process.platform === 'win32') {
+    echo = 'echo';
+  } else {
+    echo = '/bin/echo';
+  }
 
-  await fs.promises.writeFile(`${awsDir}/credentials`, `[${profile}]\ncredential_process = /bin/echo '${JSON.stringify(credentials)}'\n`);
+  await fs.promises.writeFile(`${awsDir}/credentials`, `[${profile}]\ncredential_process = ${echo} '${JSON.stringify(credentials)}'\n`);
 
   core.setSecret(credentials.SecretAccessKey);
   core.setSecret(credentials.SessionToken);

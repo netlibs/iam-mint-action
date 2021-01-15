@@ -35,14 +35,16 @@ async function main() {
   const credentials = body.credentials;
   credentials.Version = 1;
   
-  let echo;
+  let credProc;
+  let credStr = JSON.stringify(credentials);
   if (process.platform === 'win32') {
-    echo = 'echo';
+    let credStr64 = (new Buffer.from(credStr)).toString('base64');
+    credProc = `"C:\\Program Files\\PowerShell\\7\\pwsh.EXE" -command "[System.Text.Encoding]::ASCII.GetString([System.Convert]::FromBase64String('${credStr64}'))"`;
   } else {
-    echo = '/bin/echo';
+    credProc = `/bin/echo '${credStr}'`;
   }
 
-  await fs.promises.writeFile(`${awsDir}/credentials`, `[${profile}]\ncredential_process = ${echo} '${JSON.stringify(credentials)}'\n`);
+  await fs.promises.writeFile(`${awsDir}/credentials`, `[${profile}]\ncredential_process = ${cmd}\n`);
 
   core.setSecret(credentials.SecretAccessKey);
   core.setSecret(credentials.SessionToken);

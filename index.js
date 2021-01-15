@@ -44,7 +44,7 @@ async function main() {
     credProc = `/bin/echo '${credStr}'`;
   }
 
-  await fs.promises.writeFile(`${awsDir}/credentials`, `[${profile}]\ncredential_process = ${cmd}\n`);
+  await fs.promises.writeFile(`${awsDir}/credentials`, `[${profile}]\ncredential_process = ${credProc}\n`);
 
   core.setSecret(credentials.SecretAccessKey);
   core.setSecret(credentials.SessionToken);

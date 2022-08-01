@@ -1,6 +1,6 @@
-name: 'IAM Minter'
+name: 'AWS IAM Minter'
 description: 'Mint AWS STS credentials based on github token verification'
-author: 'GitHub'
+author: 'Netlibs'
 inputs: 
   endpoint:
     description: 'The minter endpoint'
@@ -8,6 +8,9 @@ inputs:
   token:
     description: 'The GitHub token'
     required: true
+  role:
+    description: 'The AWS Role ARN to request be assumed'
+    required: false
   profile:
     description: 'The AWS profile token'
     required: true
@@ -25,5 +28,5 @@ inputs:
     default: ${{ github.repository }}
     required: true
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: 'node16'
+  main: 'index.js'

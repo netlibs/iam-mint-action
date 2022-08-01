@@ -10,6 +10,7 @@ async function main() {
 
   const token = core.getInput('token');
   const actor = core.getInput('actor');
+  const role = core.getInput('role');
   const endpoint = core.getInput('endpoint');
   const project = core.getInput('project');
   const region = core.getInput('region');
@@ -24,7 +25,7 @@ async function main() {
   const res = await fetch(endpoint, { 
     method: 'post', 
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ token, project, actor })
+    body: JSON.stringify({ token, project, actor, role })
   });
 
   if (res.status != 200) 

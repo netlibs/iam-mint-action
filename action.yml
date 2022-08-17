@@ -8,6 +8,7 @@ inputs:
   token:
     description: 'The GitHub token'
     required: true
+    default: ${{ github.token }}
   role:
     description: 'The AWS Role ARN to request be assumed'
     required: false

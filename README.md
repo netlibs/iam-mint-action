@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: netlibs/iam-mint-action@v2
+    - uses: netlibs/iam-mint-action@v3
       with:          
         endpoint: https://my.endpoint/token_issuer
         role: arn:aws:iam::<account>:role/<something>
